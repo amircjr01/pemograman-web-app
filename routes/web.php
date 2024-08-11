@@ -9,3 +9,6 @@ Route::get('/', function () {
 });
 
 Route::get('/profile', [ProfileController::class, 'index']);
+Route::get('/mahasiswa', [MahasiswaController::class, 'index'])->name('list-mahasiswa');
+Route::get('/tambah-mahasiswa', [MahasiswaController::class, 'create'])->name('tambah-mahasiswa');
+Route::post('/simpan-mahasiswa', [MahasiswaController::class, 'store'])->name('simpan-mahasiswa');
