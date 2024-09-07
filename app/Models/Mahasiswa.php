@@ -11,7 +11,14 @@ class Mahasiswa extends Model
 
     protected $table = 'mahasiswa';
 
-    protected $fillable = ['nim', 'nama'];
+    protected $primaryKey = 'nim';
 
-    public $timestamps = false;
+    public $incrementing = true;
+
+    protected $fillable = [
+        'nim',
+        'nama',
+        'email',
+    ];
+
 }

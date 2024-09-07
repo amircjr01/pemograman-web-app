@@ -1,14 +1,13 @@
 <?php
 
-use App\Http\Controllers\MahasiswaController;
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MahasiswaController;
+use App\Models\Mahasiswa;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/mahasiswa', [MahasiswaController::class, 'index']);
 
-Route::get('/profile', [ProfileController::class, 'index']);
-Route::get('/mahasiswa', [MahasiswaController::class, 'index'])->name('list-mahasiswa');
-Route::get('/tambah-mahasiswa', [MahasiswaController::class, 'create'])->name('tambah-mahasiswa');
-Route::post('/simpan-mahasiswa', [MahasiswaController::class, 'store'])->name('simpan-mahasiswa');
+Route::get('/create', [MahasiswaController::class, 'create']);
+Route::post('/store', [MahasiswaController::class, 'store']);
+Route::get('/edit/{mahasiswa}', [MahasiswaController::class, 'edit']);
+Route::put('/update/{mahasiswa}', [MahasiswaController::class, 'update']);
+Route::delete('/delete/{mahasiswa}', [MahasiswaController::class, 'delete']);

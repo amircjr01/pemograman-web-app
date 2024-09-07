@@ -7,29 +7,48 @@ use Illuminate\Http\Request;
 
 class MahasiswaController extends Controller
 {
-    public function index()
-    {
-        $mahasiswa = Mahasiswa::all();
-
-        return view('mahasiswa', ['mahasiswa' => $mahasiswa]);
-    }
-
     public function create()
     {
-        return view('tambah-mahasiswa');
+        return view('create');
     }
 
     public function store(Request $request)
     {
-        $nim = $request->nim;
-        $nama = $request->nama;
+        Mahasiswa::create([
+            'nim' => $request->nim, // Added this line to handle id_barang
+            'nama' => $request->nama,
+            'email' => $request->email,
+        ]);
 
-        $store = Mahasiswa::create(['nim' => $nim, 'nama' => $nama]);
+        session()->flash('success', 'Data Mahasiswa baru berhasil ditambahkan!');
 
-        if ($store) {
-            return redirect()->route('list-mahasiswa');
-        } else {
-            return redirect()->back();
-        }
+        return redirect('/');
+    }
+
+    public function edit(Mahasiswa $mahasiswa)
+    {
+        return view('edit', compact('mahasiswa'));
+    }
+
+    public function update(Request $request, Mahasiswa $mahasiswa)
+    {
+        $mahasiswa->update([
+            'nim' => $request->nim, // Added this line to handle id_barang
+            'nama' => $request->nama,
+            'email' => $request->email,
+        ]);
+
+        session()->flash('success', 'Data Mahasiswa berhasil diubah!');
+
+        return redirect('/');
+    }
+
+    public function delete(Mahasiswa $mahasiswa)
+    {
+        $mahasiswa->delete();
+
+        session()->flash('success', 'Data Mahasiswa berhasil dihapus!');
+
+        return redirect('/');
     }
 }
