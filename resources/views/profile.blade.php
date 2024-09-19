@@ -34,6 +34,7 @@ Data Profile
             <div class="mb-3">
                 <label for="avatar" class="form-label">Foto Profil</label>
                 @if ($profile->avatar != null)
+                    <img src="{{ asset('storage/uploads/' . $profile->avatar) }}" alt="" style="display: block;">
                     <input type="file" name="avatar" class="form-control" id="avatar">
                     <img src="{{ asset('storage/uploads/' . $profile->avatar) }}" alt="" style="display: block; margin-top: 12px;">
                 @else
