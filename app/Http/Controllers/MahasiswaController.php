@@ -7,48 +7,49 @@ use Illuminate\Http\Request;
 
 class MahasiswaController extends Controller
 {
+    public function index()
+    {
+        $mahasiswa = Mahasiswa::all();
+        // return dd($mahasiswa);
+        return view('mahasiswa', ['mahasiswa' => $mahasiswa]);
+    }
     public function create()
     {
-        return view('create');
+        return view('tambah-mahasiswa');
     }
-
     public function store(Request $request)
     {
-        Mahasiswa::create([
-            'nim' => $request->nim, // Added this line to handle id_barang
-            'nama' => $request->nama,
-            'email' => $request->email,
-        ]);
-
-        session()->flash('success', 'Data Mahasiswa baru berhasil ditambahkan!');
-
-        return redirect('/');
+        $nim = $request->nim;
+        $nama = $request->nama;
+        $store = Mahasiswa::create(['nim' => $nim, 'nama' => $nama]);
+        if ($store) {
+            return redirect()->route('list-mahasiswa');
+        } else {
+            return redirect()->back();
+        }
     }
-
-    public function edit(Mahasiswa $mahasiswa)
+    public function edit($nim)
     {
-        return view('edit', compact('mahasiswa'));
+        $mahasiswa = Mahasiswa::where('nim', $nim)->first();
+        return view('edit-mahasiswa', ['mahasiswa' => $mahasiswa]);
     }
-
-    public function update(Request $request, Mahasiswa $mahasiswa)
+    public function update(Request $request, $nim)
     {
-        $mahasiswa->update([
-            'nim' => $request->nim, // Added this line to handle id_barang
-            'nama' => $request->nama,
-            'email' => $request->email,
-        ]);
-
-        session()->flash('success', 'Data Mahasiswa berhasil diubah!');
-
-        return redirect('/');
+        $update = Mahasiswa::where('nim', $nim)->update(['nama' => $request->nama]);
+        if ($update) {
+            return redirect()->route('list-mahasiswa');
+        } else {
+            return redirect()->back();
+        }
     }
-
-    public function delete(Mahasiswa $mahasiswa)
+    public function delete($nim)
     {
-        $mahasiswa->delete();
-
-        session()->flash('success', 'Data Mahasiswa berhasil dihapus!');
-
-        return redirect('/');
+        $mahasiswa = Mahasiswa::where('nim', $nim);
+        $delete = $mahasiswa->delete();
+        if ($delete) {
+            return redirect()->route('list-mahasiswa');
+        } else {
+            return redirect()->back();
+        }
     }
 }
