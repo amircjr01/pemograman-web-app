@@ -9,19 +9,17 @@
 <body>
     <div class="container">
         <h1>Edit Data Mahasiswa</h1>
-        <form method="POST" action="{{ route('update-mahasiswa', ['nim' => $mahasiswa->nim]) }}">
-            @csrf
-            @method("PUT")
-            <div class="mb-3">
-                <label for="nim" class="form-label">NIM</label>
-                <input type="text" name="nim" class="form-control" id="nim" value="{{ $mahasiswa->nim }}" disabled>
-            </div>
             <div class="mb-3">
                 <label for="nama" class="form-label">Nama</label>
                 <input type="text" name="nama" class="form-control" id="nama" value="{{ $mahasiswa->nama }}">
+                <input type="text" name="nama" class="form-control  @error('nama') is-invalid @enderror" id="nama" value="{{ $mahasiswa->nama }}">
+                @error('nama')
+                    <p class="text-danger">{{ $message }}</p>
+                @enderror
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
             <a href="index.php" class="btn btn-danger">Kembali</a>
+            <a href="{{ route('list-mahasiswa') }}" class="btn btn-danger">Kembali</a>
         </form>
     </div>
 </body>
