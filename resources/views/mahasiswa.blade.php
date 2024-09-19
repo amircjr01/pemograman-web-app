@@ -30,6 +30,11 @@
             </thead>
             <tbody>
 @@ -29,6 +30,14 @@
+                @php
+                    $i = 1;
+                @endphp
+                @foreach ($mahasiswa as $item)
+                <tr>
                         <td>{{ $i++ }}</td>
                         <td>{{ $item->nim }}</td>
                         <td>{{ $item->nama }}</td>
